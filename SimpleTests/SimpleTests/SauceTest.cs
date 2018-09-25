@@ -11,7 +11,7 @@ namespace SimpleTests
     {
         IWebDriver Driver;
         [TestMethod]
-        public void SauceConnectTest()
+        public void HardcodedKeys()
         {
             var sauceUserName = "nikolay-a";
             var sauceAccessKey = "0fd366b1-548f-4ef4-8143-4746100fdf96";
@@ -28,5 +28,23 @@ namespace SimpleTests
             Assert.IsTrue(true);
             Driver?.Quit();
         }
-    }
+        [TestMethod]
+        public void EnvironmentVariables()
+        {
+            var sauceUserName = Environment.GetEnvironmentVariable("SAUCE_USERNAME", EnvironmentVariableTarget.User);
+            var sauceAccessKey = Environment.GetEnvironmentVariable("SAUCE_ACCESS_KEY", EnvironmentVariableTarget.User);
+
+            ChromeOptions options = new ChromeOptions();
+            options.AddAdditionalCapability(CapabilityType.Version, "latest", true);
+            options.AddAdditionalCapability(CapabilityType.Platform, "Windows 10", true);
+            options.AddAdditionalCapability("username", sauceUserName, true);
+            options.AddAdditionalCapability("accessKey", sauceAccessKey, true);
+
+            Driver = new RemoteWebDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), options.ToCapabilities(),
+                TimeSpan.FromSeconds(600));
+            Driver.Navigate().GoToUrl("https://www.google.com");
+            Assert.IsTrue(true);
+            Driver?.Quit();
+        }
+    }       
 }
