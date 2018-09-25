@@ -8,4 +8,5 @@ Write-Host "sauce.accessKey that was passed in from Azure DevOps=>$sauceAccessKe
 [Environment]::SetEnvironmentVariable("SAUCE_USERNAME", "$sauceUserName", "User")
 [Environment]::SetEnvironmentVariable("SAUCE_ACCESS_KEY", "$sauceAccessKey)", "User")
 Write-Host "Here are the variables that were stored in SAUCE_ACCESS_KEY=>"$Env:SAUCE_ACCESS_KEY
+Write-Host "Here are the variables that were stored=>"$Env:SAUCE_ACCESS_KEY
 Write-Host "Here are the variables that were stored in SAUCE_USERNAME=>"$Env:SAUCE_USERNAME
